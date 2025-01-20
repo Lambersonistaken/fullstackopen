@@ -4,14 +4,35 @@ import StatisticLine from "./StatisticLine"
 const Statistics = (props) => {
   return (
     <div>
-      <h2>Statistics</h2>
       <div className='statistics'>
-        <StatisticLine text="good" value={props.good} />
-        <StatisticLine text="neutral" value={props.neutral} />
-        <StatisticLine text="bad" value={props.bad} />
-        <StatisticLine text="all" value={props.all} />
-        <StatisticLine text="average" value={props.average} />
-        <StatisticLine text="positive" value={props.positive} />
+        <table style={{marginTop: '20px'}}>
+          <thead>
+            <tr>
+              <th>Statistics</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><StatisticLine text='Good' value={props.good} /></td>
+          </tr>
+          <tr>
+            <td><StatisticLine text='Neutral' value={props.neutral} /></td>
+          </tr>
+          <tr>
+            <td><StatisticLine text='Bad' value={props.bad} /></td>
+          </tr>
+          <tr>
+            <td><StatisticLine text='All' value={props.all} /></td>
+          </tr>
+          <tr>
+            <td><StatisticLine text='Average' value={props.average} /></td>
+          </tr>
+          <tr>
+            <td><StatisticLine text='Positive' value={props.positive} /></td>
+          </tr>
+          </tbody>
+          
+        </table>
       </div>  
     </div>
   )
