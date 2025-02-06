@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useState } from 'react'
 
 const App = () => {
@@ -13,6 +12,13 @@ const App = () => {
   }
 
   const handleSubmit = (event) => {
+
+    if(persons.find(person => person.name === newName)) {
+      alert(`${newName} is already added to phonebook`)
+      return;
+    }
+
+
     event.preventDefault()
     const personObject = {
       name: newName
