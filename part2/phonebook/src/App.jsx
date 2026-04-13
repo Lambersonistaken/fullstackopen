@@ -3,12 +3,16 @@ import PersonForm from "./components/PersonForm";
 import Filter from "./components/Filter";
 import Persons from "./components/Persons";
 import personService from "./services/persons";
+import Notification from "./components/Notification";
+import Error from "./components/Error";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [search, setSearch] = useState("");
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [errMessage, setErrMessage] = useState(null);
 
   useEffect(() => {
     console.log("effect");
@@ -45,6 +49,14 @@ const App = () => {
             );
             setNewName("");
             setNewNumber("");
+          })
+          .catch((error) => {
+            setErrMessage(
+              `Information of ${person.name} ${error} has already been removed from server`,
+            );
+            setTimeout(() => {
+              setErrMessage(null);
+            }, 3000);
           });
       } else {
         return;
@@ -62,6 +74,10 @@ const App = () => {
       setPersons(persons.concat(response.data));
       setNewName("");
       setNewNumber("");
+      setSuccessMessage(`Added ${personObject.name}`);
+      setTimeout(() => {
+        setSuccessMessage(null);
+      }, 3000);
     });
   };
 
@@ -82,6 +98,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={successMessage} />
+      <Error message={errMessage} />
       <PersonForm
         newName={newName}
         newNumber={newNumber}

@@ -3,12 +3,13 @@
     {
       "name": "Ismail",
       "number": "12345",
-      "id": 1
+      "id": "2"
     },
     {
-      "name": "Ismail",
-      "number": "12345",
-      "id": 2
+      "name": "Lamberson",
+      "number": "123456",
+      "id": "UNclyFN5u7Q"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
