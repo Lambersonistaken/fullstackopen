@@ -62,7 +62,7 @@ app.get("/api/persons", (request, response) => {
   })
 });
 
-app.get("/api/persons/:id", (request, response) => {
+app.get("/api/persons/:id", (request, response, next) => {
   const id = request.params.id;
   Note.findById(id).then(note => {
     if (note) {
@@ -70,7 +70,7 @@ app.get("/api/persons/:id", (request, response) => {
     } else {
       response.status(404).end();
     }
-  })
+  }).catch(error => next(error));
 });
 
 app.delete("/api/persons/:id", (request, response) => {
@@ -105,6 +105,19 @@ const unknownEndpoint = (request, response) => {
 };
 
 app.use(unknownEndpoint);
+
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  } 
+
+  next(error)
+}
+
+// this has to be the last loaded middleware, also all the routes should be registered before this!
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
