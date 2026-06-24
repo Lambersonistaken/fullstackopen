@@ -87,7 +87,21 @@ app.post("/api/persons", (request, response) => {
   }
 
   if (persons.find((p) => p.name === body.name)) {
-    return response.status(404).json({ error: "Name must be unique" });
+    app.put("/api/persons/:id", (request, response) => {
+      const id = request.params.id;
+      const body = request.body;
+
+      const person = {
+        name: body.name,
+        number: body.number,
+      };
+
+      Note.findByIdAndUpdate(id, person, { new: true })
+        .then((updatedPerson) => {
+          response.json(updatedPerson);
+        })
+        .catch((error) => next(error));
+    });
   }
 
   const newPerson = new Note({
