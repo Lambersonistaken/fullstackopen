@@ -88,13 +88,14 @@ app.post("/api/persons", (request, response) => {
     return response.status(404).json({ error: "Name must be unique" });
   }
 
-  const newPerson = {
-    id: generateId(),
+  const newPerson = new Note({
     name: body.name,
     number: body.number,
-  };
-  persons = persons.concat(newPerson);
-  response.json(newPerson);
+  });
+
+  newPerson.save().then(savedPerson => {
+    response.json(savedPerson);
+  });
 });
 
 const unknownEndpoint = (request, response) => {
